@@ -71,8 +71,8 @@ def run(args):
         for _ in range(10):
 
             try:
-                    app.test_run_txs(
-                    network=network, args=args, num_txs=len(network.get_joined_nodes())
+                app.test_run_txs(
+                network=network, args=args, num_txs=len(network.get_joined_nodes())
                 )
                 success = True
                 break
