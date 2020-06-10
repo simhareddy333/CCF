@@ -66,9 +66,23 @@ def run(args):
             LOG.success("late joiner caught up successfully")
 
         # check nodes have resumed normal execution before shutting down
-        app.test_run_txs(
-            network=network, args=args, num_txs=len(network.get_joined_nodes())
-        )
+        success = False
+
+        for _ in range(10):
+
+            try:
+                    app.test_run_txs(
+                    network=network, args=args, num_txs=len(network.get_joined_nodes())
+                )
+                success = True
+                break
+            except (
+                TimeoutError,
+                infra.clients.CCFConnectionException,
+            ):
+                LOG.debug("Network is unavailable")
+        if not success:
+            raise TimeoutError("Network did not open")
 
         # assert that view changes actually did occur
         assert len(view_info) > 1
