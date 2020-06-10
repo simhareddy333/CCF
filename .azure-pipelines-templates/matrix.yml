@@ -54,7 +54,7 @@ jobs:
         cmake_args: '${{ parameters.build.common.cmake_args }} ${{ parameters.build.debug.cmake_args }} ${{ parameters.build[target].cmake_args }}'
         suffix: 'Debug'
         artifact_name: '${{ target }}_Debug'
-        ctest_filter: '${{ parameters.test[target].ctest_args }}'
+        ctest_filter: '${{ parameters.test[target].ctest_args }} -R replay_new_view_pbft'
         ctest_timeout: '240'
 
   # Performance
